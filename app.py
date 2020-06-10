@@ -1,20 +1,26 @@
-__version__ = '0.1.0'
+__version__ = "0.1.0"
 
 from flask import Flask
 import requests
 
 app = Flask(__name__)
 
-@app.route('/')
+
+@app.route("/")
 def joke():
-    res = requests.get('https://icanhazdadjoke.com/',{},headers={'Accept':'text/plain'})
+    res = requests.get(
+        "https://icanhazdadjoke.com/", {}, headers={"Accept": "text/plain"}
+    )
     print(res.content)
-    dataobj = {"text":res.content}
-    postres = requests.post('https://hooks.slack.com/services/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', data=dataobj)
+    dataobj = {"text": res.content}
+    postres = requests.post(
+        "https://hooks.slack.com/services/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",
+        data=dataobj,
+        headers={"Content-type: application/json"},
+    )
     print(postres.content)
     return res.content
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run()
-
-
